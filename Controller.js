@@ -136,6 +136,21 @@ app.post('/clientes', async(req, res)=>{
             });
         });
 
+        app.get('/produto/:id/compras', async(req, res)=>{
+            await produto.findAll({
+                where: {ProdutoId: req.params.id}})
+            .then(item =>{
+                return res.json({
+                    error: false,
+                    item
+                });
+            }).catch(function(error){
+                return res.status(400).json({
+                    error: true,
+                    message: "Erro: não foi possivel conectar!"
+                });
+            });
+        });
         app.put('/atualizaproduto', async(req,res)=>{
             await produto.update(req.body,{
                 where: {id: req.body.id}
